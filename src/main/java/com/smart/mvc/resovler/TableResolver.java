@@ -126,10 +126,9 @@ public class TableResolver {
 		if (tableField != null && !StringUtils.isEmpty(tableField.name())) {
 			columnName = tableField.name();
 		}
-		else {
-			// columnName = camelToUnderline(field.getName());
-			columnName = field.getName();
-		}
+        else {
+            columnName = camelToUnderline(field.getName());
+        }
 		return new TableColumn(field.getName(), columnName);
 	}
 
