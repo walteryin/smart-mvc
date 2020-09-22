@@ -37,7 +37,7 @@ public interface BaseService<T extends PersistentObject, ID extends Serializable
 	 * @param id
 	 * @return
 	 */
-	T selectById(ID id);
+	T get(ID id);
 
 	/**
 	 * 通过主键集合查询实体

@@ -22,7 +22,7 @@ public class DynamicSqlProvider {
 	
 	public static final String SELECT_COLUMNS = "@selectColumns";
 	
-	public String selectById(Serializable id) {
+	public String get(Serializable id) {
 		return new StringBuilder().append("SELECT ").append(SELECT_COLUMNS).append(" FROM ").append(TABLE_NAME)
 				.append(" WHERE ").append(ID).append(" = #{").append(ID).append("}").toString();
 	}

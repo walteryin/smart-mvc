@@ -31,7 +31,7 @@ public interface Dao<T> {
 	 * @param id
 	 * @return
 	 */
-	T selectById(Serializable id);
+	T get(Serializable id);
 
 	/**
 	 * 插入实体

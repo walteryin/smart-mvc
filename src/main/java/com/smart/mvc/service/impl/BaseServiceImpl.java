@@ -63,8 +63,8 @@ public class BaseServiceImpl<DAO extends Dao<T>, T extends PersistentObject, ID 
     }
 
     @Override
-	public T selectById(ID id) {
-		return dao.selectById(id);
+	public T get(ID id) {
+		return dao.get(id);
 	}
 
     @Override

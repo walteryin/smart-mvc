@@ -28,8 +28,8 @@ public interface DynamicDao<T> extends Dao<T>{
 	List<T> selectByCondition(@Param("condition") Condition condition, Page<T> p);
 
 	@Override
-	@SelectProvider(type = DynamicSqlProvider.class, method="selectById")
-	T selectById(Serializable id);
+	@SelectProvider(type = DynamicSqlProvider.class, method="get")
+	T get(Serializable id);
 
 	@Override
 	@Options(useGeneratedKeys = true, keyProperty = DynamicSqlProvider.ID)
