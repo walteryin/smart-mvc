@@ -153,6 +153,7 @@ public class TableResolver {
 		List<TableColumn> list = tableInfo.getColumnList();
 		for (TableColumn entityColumn : list) {
 			String c = entityColumn.getColumn();
+			c = "`" + c + "`";
 			if (!entityColumn.getColumn().equals(entityColumn.getField())) {
 				c += " AS " + entityColumn.getField();
 			}
