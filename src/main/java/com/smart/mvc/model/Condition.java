@@ -26,7 +26,7 @@ import com.smart.mvc.enums.ValueTypeEnum;
  * 
  * @author Joe
  */
-public class Condition implements Conditionable, Serializable {
+public class Condition implements Serializable {
 
     private static final long serialVersionUID = 1948446733871975127L;
 
@@ -48,81 +48,140 @@ public class Condition implements Conditionable, Serializable {
         return new Condition();
     }
 
-    /**
-     * 追加排序
-     * 
-     * @param orderBy
-     * @return
-     */
-    protected Condition addOrderBy(String orderBy) {
-        this.orderBy = orderBy;
-        return this;
-    }
+	public Condition isNull(String column) {
+		return append(column, QueryTypeEnum.IS_NULL);
+	}
 
-    /**
-     * 追加查询条件
-     * 
-     * @param criteria
-     * @return
-     */
-    protected Condition addCriteria(String criteria) {
-        if (StringUtils.isEmpty(criteria)) {
-            throw new IllegalArgumentException("criteria cannot be null");
+	public Condition isNull(boolean checker, String column) {
+		return checker ? isNull(column) : this;
+	}
+	
+	public Condition isNotNull(String column) {
+		return append(column, QueryTypeEnum.IS_NOT_NULL);
+	}
+
+	public Condition isNotNull(boolean checker, String column) {
+		return checker ? isNotNull(column) : this;
+	}
+	
+	public Condition eq(String column, Object value) {
+		return append(column, QueryTypeEnum.EQUAL, value);
+	}
+	
+	public Condition eq(boolean checker, String column, Object value) {
+		return checker ? eq(column, value) : this;
+	}
+	
+	public Condition ne(String column, Object value) {
+		return append(column, QueryTypeEnum.NOT_EQUAL, value);
+	}
+	
+	public Condition ne(boolean checker, String column, Object value) {
+		return checker ? ne(column, value) : this;
+	}
+	
+	public Condition gt(String column, Object value) {
+		return append(column, QueryTypeEnum.GREATER, value);
+	}
+	
+	public Condition gt(boolean checker, String column, Object value) {
+		return checker ? gt(column, value) : this;
+	}
+	
+	public Condition ge(String column, Object value) {
+		return append(column, QueryTypeEnum.GREATER_EQUAL, value);
+	}
+	
+	public Condition ge(boolean checker, String column, Object value) {
+		return checker ? ge(column, value) : this;
+	}
+	
+	public Condition lt(String column, Object value) {
+		return append(column, QueryTypeEnum.LESS, value);
+	}
+	
+	public Condition lt(boolean checker, String column, Object value) {
+		return checker ? lt(column, value) : this;
+	}
+	
+	public Condition le(String column, Object value) {
+		return append(column, QueryTypeEnum.LESS_EQUAL, value);
+	}
+	
+	public Condition le(boolean checker, String column, Object value) {
+		return checker ? le(column, value) : this;
+	}
+	
+	public Condition in(String column, Collection<?> value) {
+		return append(column, QueryTypeEnum.IN, value);
+	}
+	
+	public Condition in(boolean checker, String column, Collection<?> value) {
+		return checker ? in(column, value) : this;
+	}
+	
+	public Condition notIn(String column, Collection<?> value) {
+		return append(column, QueryTypeEnum.NOT_IN, value);
+	}
+	
+	public Condition notIn(boolean checker, String column, Collection<?> value) {
+		return checker ? notIn(column, value) : this;
+	}
+	
+	public Condition between(String column, Object v1, Object v2) {
+		return append(column, QueryTypeEnum.BETWEEN, v1, v2);
+	}
+	
+	public Condition between(boolean checker, String column, Object v1, Object v2) {
+		return checker ? between(column, v1, v2) : this;
+	}
+	
+	public Condition notBetween(String column, Object v1, Object v2) {
+		return append(column, QueryTypeEnum.NOT_BETWEEN, v1, v2);
+	}
+	
+	public Condition notBetween(boolean checker, String column, Object v1, Object v2) {
+		return checker ? notBetween(column, v1, v2) : this;
+	}
+	
+	public Condition like(String column, String value) {
+		return append(column, QueryTypeEnum.LIKE, "%" + value + "%");
+	}
+	
+	public Condition like(boolean checker, String column, String value) {
+		return checker ? like(column, value) : this;
+	}
+	
+	public Condition notLike(String column, String value) {
+		return append(column, QueryTypeEnum.NOT_LIKE, "%" + value + "%");
+	}
+	
+	public Condition notLike(boolean checker, String column, String value) {
+		return checker ? notLike(column, value) : this;
+	}
+	
+	public Condition orderBy(boolean checker, String orderBy) {
+		return checker ? orderBy(orderBy) : this;
+	}
+	
+	public Condition orderBy(String orderBy) {
+		this.orderBy = orderBy;
+		return this;
+	}
+	
+	public Condition sql(String sql) {
+		if (StringUtils.isEmpty(sql)) {
+            throw new IllegalArgumentException("sql cannot be null");
         }
-        criteriaList.add(new Criteria(criteria, null, ValueTypeEnum.NO));
+        criteriaList.add(Criteria.create(sql, null, ValueTypeEnum.NO));
         return this;
-    }
-
-    /**
-     * 追加查询条件
-     * 
-     * @param column
-     * @param queryType
-     * @param value
-     * @return
-     */
-    protected Condition addCriteria(String column, QueryTypeEnum queryType, Object... value) {
-        Object val = parseTypeValue(column, queryType, value);
-        criteriaList.add(new Criteria(column + " " + queryType.getLabel(), val, queryType.getValueType()));
+	}
+	
+    private Condition append(String column, QueryTypeEnum queryType, Object... value) {
+        criteriaList.add(Criteria.parse(column, queryType, value));
         return this;
     }
     
-	private Object parseTypeValue(String property, QueryTypeEnum queryType, Object... value) {
-		Object val = null;
-		if (StringUtils.isEmpty(property)) {
-			throw new IllegalArgumentException("property cannot be null");
-		}
-		if (queryType == null) {
-			throw new IllegalArgumentException("queryType cannot be null");
-		}
-		if (queryType.getValueType() != ValueTypeEnum.NO) {
-			if (value == null) {
-				throw new IllegalArgumentException("value cannot be null");
-			}
-			if (queryType.getValueType() == ValueTypeEnum.SINGLE) {
-				val = value[0];
-			}
-			else if (queryType.getValueType() == ValueTypeEnum.COLLECTION) {
-				if (!(value[0] instanceof Collection)) {
-					throw new IllegalArgumentException("value type must be Collection");
-				}
-				else if (((Collection<?>) value[0]).isEmpty()) {
-					throw new IllegalArgumentException("value can't be empty");
-				}
-				val = value[0];
-			}
-			else if (queryType.getValueType() == ValueTypeEnum.TWO) {
-				if (value.length == 2) {
-					val = value;
-				}
-				else {
-					throw new IllegalArgumentException("value length must be 2");
-				}
-			}
-		}
-		return val;
-	}
-	
 	public String getOrderBy() {
         return orderBy;
     }
@@ -130,37 +189,4 @@ public class Condition implements Conditionable, Serializable {
     public List<Criteria> getCriteriaList() {
         return criteriaList;
     }
-
-    public class Criteria extends Item {
-
-        private static final long serialVersionUID = 1681191456328793646L;
-        
-        private ValueTypeEnum valueType;
-
-        public Criteria(String label, Object value, ValueTypeEnum valueType) {
-            super(label, value);
-            this.valueType = valueType;
-        }
-
-        public boolean isNoValue() {
-            return valueType == ValueTypeEnum.NO;
-        }
-
-        public boolean isSingleValue() {
-            return valueType == ValueTypeEnum.SINGLE;
-        }
-
-        public boolean isTwoValue() {
-            return valueType == ValueTypeEnum.TWO;
-        }
-
-        public boolean isCollectionValue() {
-            return valueType == ValueTypeEnum.COLLECTION;
-        }
-    }
-
-	@Override
-	public Condition condition() {
-		return this;
-	}
 }
