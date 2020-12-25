@@ -1,9 +1,6 @@
 package com.smart.mvc.validator;
 
-import org.springframework.util.StringUtils;
-
-import com.smart.mvc.exception.ValidateException;
-import com.smart.mvc.util.ValidateUtils;
+import com.smart.mvc.ruler.sum.StrRuler;
 
 /**
  * 验证器
@@ -12,150 +9,86 @@ import com.smart.mvc.util.ValidateUtils;
  */
 public enum Validator {
 
-	/**
-	 * 非空验证
-	 */
-	NOT_BLANK {
+	AMOUNT {
 
 		@Override
 		public void validate(String name, String value) {
-			if (StringUtils.isEmpty(value)) {
-				throw new ValidateException(name + "不能为空");
-			}
+			ValidateBuilder.create().add(value, name, StrRuler.amount()).buildThrow();
 		}
 	},
-	/**
-	 * 中文验证
-	 */
+
 	CHINESE {
 
 		@Override
 		public void validate(String name, String value) {
-			if (!ValidateUtils.isChinese(value)) {
-				throw new ValidateException(name + "必须为中文");
-			}
+			ValidateBuilder.create().add(value, name, StrRuler.chinese()).buildThrow();
 		}
 	},
-	/**
-	 * 整数验证
-	 */
-	INT {
-		@Override
-		public void validate(String name, String value) {
-			if (!ValidateUtils.isInteger(value)) {
-				throw new ValidateException(name + "必须为整数");
-			}
-		}
-	},
-	/**
-	 * 日期验证
-	 */
+
 	DATE {
 
 		@Override
 		public void validate(String name, String value) {
-			if (!ValidateUtils.isDate(value)) {
-				throw new ValidateException(name + "格式不对");
-			}
+			ValidateBuilder.create().add(value, name, StrRuler.date()).buildThrow();
 		}
 	},
-	/**
-	 * 身份号验证
-	 */
-	IDNO {
+
+	DATE_TIME {
 
 		@Override
 		public void validate(String name, String value) {
-			if (!ValidateUtils.isIdNo(value)) {
-				throw new ValidateException(name + "不符合身份证号格式，请检查");
-			}
+			ValidateBuilder.create().add(value, name, StrRuler.dateTime()).buildThrow();
 		}
 	},
-	IP {
 
-		@Override
-		public void validate(String name, String value) {
-			if (!ValidateUtils.isIp(value)) {
-				throw new ValidateException(name + "不符合IP地址格式，请检查");
-			}
-		}
-	},
-	/**
-	 * 邮件验证
-	 */
 	EMAIL {
 
 		@Override
 		public void validate(String name, String value) {
-			if (!ValidateUtils.isEmail(value)) {
-				throw new ValidateException(name + "格式不正确，请检查");
-			}
+			ValidateBuilder.create().add(value, name, StrRuler.email()).buildThrow();
 		}
 	},
-	/**
-	 * 手机验证
-	 */
+
+	ID_CARD {
+
+		@Override
+		public void validate(String name, String value) {
+			ValidateBuilder.create().add(value, name, StrRuler.idCard()).buildThrow();
+		}
+	},
+
+	INTEGER {
+
+		@Override
+		public void validate(String name, String value) {
+			ValidateBuilder.create().add(value, name, StrRuler.integer()).buildThrow();
+		}
+	},
+
 	MOBILE {
 
 		@Override
 		public void validate(String name, String value) {
-			if (!ValidateUtils.isMobile(value)) {
-				throw new ValidateException(name + "格式不正确，请检查");
-			}
-
-		}
-	},
-	/**
-	 * 密码验证
-	 */
-	PASSWORD {
-
-		@Override
-		public void validate(String name, String value) {
-			if (!ValidateUtils.isPassword(value)) {
-				throw new ValidateException(name + "格式不正确，请检查");
-			}
-		}
-	},
-	/**
-	 * 姓名验证
-	 */
-	PERSONNAME {
-
-		@Override
-		public void validate(String name, String value) {
-			if (!ValidateUtils.isPersonName(value)) {
-				throw new ValidateException(name + "格式不正确，请检查");
-			}
-
-		}
-	},
-	/**
-	 * 用户名验证
-	 */
-	USERNAME {
-
-		@Override
-		public void validate(String name, String value) {
-			if (!ValidateUtils.isUsername(value)) {
-				throw new ValidateException(name + "格式不正确，请检查");
-			}
-
+			ValidateBuilder.create().add(value, name, StrRuler.mobile()).buildThrow();
 		}
 	},
 
-	/**
-	 * 金额格式
-	 */
-	MONEY {
+	NOT_BLANK {
 
 		@Override
 		public void validate(String name, String value) {
-			if (!ValidateUtils.isMoney(value)) {
-				throw new ValidateException(name + "格式不正确，请检查");
-			}
+			ValidateBuilder.create().add(value, name, StrRuler.notEmpty()).buildThrow();
+		}
+	},
+
+	URL {
+
+		@Override
+		public void validate(String name, String value) {
+			ValidateBuilder.create().add(value, name, StrRuler.url()).buildThrow();
 		}
 	};
+
 	/**
 	 * 参数校验
 	 * 

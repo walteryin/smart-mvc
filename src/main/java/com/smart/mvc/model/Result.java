@@ -105,4 +105,9 @@ public class Result<T> implements Serializable {
     public boolean isSuccess() {
         return ResultConstant.SUCCESS == code;
     }
+
+	@Override
+	public String toString() {
+		return "Result [data=" + data + ", code=" + code + ", message=" + message + "]";
+	}
 }
