@@ -40,14 +40,14 @@ public class ValidateBuilder {
 		if (errRuler == null) {
 			return this;
 		}
-		
+
 		this.ruler = errRuler;
 		this.code = code == null ? ResultConstant.VALIDATE_ERROR : code;
-		this.message = StringUtils.isEmpty(name) ? ruler.getMessage() : name + ruler.getMessage();
+		this.message = StringUtils.isEmpty(name) ? errRuler.getMessage() : name + errRuler.getMessage();
 		return this;
 	}
 
-	public void buildThrow() throws ValidateException {
+	public void buildThrow() {
 		if (ruler != null) {
 			throw new ValidateException(code, message);
 		}
