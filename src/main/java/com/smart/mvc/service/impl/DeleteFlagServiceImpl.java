@@ -1,7 +1,9 @@
 package com.smart.mvc.service.impl;
 
+import java.util.Collection;
 import java.util.List;
 
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import com.smart.mvc.dao.Dao;
@@ -47,6 +49,18 @@ public class DeleteFlagServiceImpl<DAO extends Dao<T>, T extends DeleteFlagPersi
 	public void insert(T t) {
 		t.setDeleteFlag(DeleteFlagPersistentObject.NORMAL);
 		super.insert(t);
+	}
+
+	@Override
+	@Transactional(readOnly = false)
+	public void delete(Collection<T> ts) {
+		super.delete(ts);
+	}
+
+	@Override
+	@Transactional(readOnly = false)
+	public void deleteByIds(Collection<Integer> ids) {
+		super.deleteByIds(ids);
 	}
 
 	@Override
