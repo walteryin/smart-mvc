@@ -36,13 +36,11 @@ public class DeleteFlagServiceImpl<DAO extends Dao<T>, T extends DeleteFlagPersi
 	
 	@Override
 	public T get(Integer id) {
-		T t = super.get(id);
-		if (DeleteFlagPersistentObject.NORMAL.equals(t.getDeleteFlag())) {
-			return t;
-		}
-		else {
+		T t;
+		if ((t = super.get(id)) == null || !DeleteFlagPersistentObject.NORMAL.equals(t.getDeleteFlag())) {
 			return null;
 		}
+		return t;
 	}
 	
 	@Override
