@@ -138,7 +138,7 @@ public class BaseServiceImpl<DAO extends Dao<T>, T extends PersistentObject, ID 
 	    deleteByCondition(Condition.create().in(DynamicSqlProvider.ID, ids));
 	}
 	
-	protected void deleteByCondition(Condition condition) {
-	    dao.deleteByCondition(condition);
+	protected void deleteByCondition(Condition c) {
+	    dao.deleteByCondition(c);
     }
 }
