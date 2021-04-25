@@ -10,7 +10,7 @@ import com.smart.mvc.dao.Dao;
 import com.smart.mvc.model.Condition;
 import com.smart.mvc.model.DeleteFlagPersistentObject;
 import com.smart.mvc.model.Page;
-import com.smart.mvc.service.Service;
+import com.smart.mvc.service.BaseService;
 
 /**
  * Service基类，实现了数据的CRUD
@@ -19,8 +19,8 @@ import com.smart.mvc.service.Service;
  * @param <T>
  * @author Joe
  */
-public class DeleteFlagServiceImpl<DAO extends Dao<T>, T extends DeleteFlagPersistentObject> extends ServiceImpl<DAO, T>
-		implements Service<T> {
+public class DeleteFlagServiceImpl<DAO extends Dao<T>, T extends DeleteFlagPersistentObject> extends BaseServiceImpl<DAO, T>
+		implements BaseService<T> {
 	
 	@Override
 	protected List<T> selectList(Condition c) {
