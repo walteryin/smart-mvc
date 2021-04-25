@@ -37,7 +37,7 @@ public class DeleteFlagServiceImpl<DAO extends Dao<T>, T extends DeleteFlagPersi
 	@Override
 	public T get(Integer id) {
 		T t;
-		if ((t = super.get(id)) == null || !DeleteFlagPersistentObject.NORMAL.equals(t.getDeleteFlag())) {
+		if ((t = super.get(id)) == null || DeleteFlagPersistentObject.DELETED.equals(t.getDeleteFlag())) {
 			return null;
 		}
 		return t;
@@ -49,6 +49,9 @@ public class DeleteFlagServiceImpl<DAO extends Dao<T>, T extends DeleteFlagPersi
 		super.insert(t);
 	}
 
+	/**
+	 * 注：多条逻辑删除，是通过单条update更新完成，所以需要增加事务注解
+	 */
 	@Override
 	@Transactional(readOnly = false)
 	public void delete(Collection<T> ts) {
