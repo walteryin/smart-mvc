@@ -1,5 +1,10 @@
 package com.smart.mvc.model;
 
+import java.util.Collection;
+import java.util.Optional;
+
+import org.springframework.util.CollectionUtils;
+
 /**
  * 键值对基础接口 
  * 
@@ -7,7 +12,18 @@ package com.smart.mvc.model;
  */
 public interface Itemable {
 
-	public String getLabel();
+	String getLabel();
 
-	public Object getValue();
+	Object getValue();
+	
+	static <E extends Itemable> E get(Collection<E> c, Object value) {
+		if (CollectionUtils.isEmpty(c)) {
+			return null;
+		}
+		return c.stream().filter(a -> a.getValue().equals(value)).findAny().orElse(null);
+	}
+	
+	static <E extends Itemable> String getLabel(Collection<E> c, Object value) {
+        return Optional.ofNullable(get(c, value)).map(d -> d.getLabel()).orElse(null);
+    }
 }
