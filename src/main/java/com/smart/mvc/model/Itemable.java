@@ -26,4 +26,11 @@ public interface Itemable {
 	static <E extends Itemable> String getLabel(Collection<E> c, Object value) {
         return Optional.ofNullable(get(c, value)).map(d -> d.getLabel()).orElse(null);
     }
+	
+    static <E extends Itemable> E getByLabel(Collection<E> c, String Label) {
+    	if (CollectionUtils.isEmpty(c)) {
+			return null;
+		}
+        return c.stream().filter(a -> a.getLabel().equals(Label)).findAny().orElse(null);
+    }
 }
