@@ -83,7 +83,7 @@ public class ServiceImpl<DAO extends Dao<T>, T extends PersistentObject, ID exte
 	}
 
     @Override
-    @Transactional(readOnly = false)
+    @Transactional
 	public void save(Collection<T> ts) {
 		for (T t : ts) {
 			save(t);
@@ -96,7 +96,7 @@ public class ServiceImpl<DAO extends Dao<T>, T extends PersistentObject, ID exte
     }
 
     @Override
-    @Transactional(readOnly = false)
+    @Transactional
     public void insert(Collection<T> ts) {
         for (T t : ts) {
             insert(t);
@@ -109,7 +109,7 @@ public class ServiceImpl<DAO extends Dao<T>, T extends PersistentObject, ID exte
 	}
 
     @Override
-    @Transactional(readOnly = false)
+    @Transactional
 	public void update(Collection<T> ts) {
 		for (T t : ts) {
 			update(t);

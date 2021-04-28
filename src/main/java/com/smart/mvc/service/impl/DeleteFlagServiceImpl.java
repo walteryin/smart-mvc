@@ -53,13 +53,13 @@ public class DeleteFlagServiceImpl<DAO extends Dao<T>, T extends DeleteFlagPersi
 	 * 注：多条逻辑删除，是通过单条update更新完成，所以需要增加事务注解
 	 */
 	@Override
-	@Transactional(readOnly = false)
+	@Transactional
 	public void delete(Collection<T> ts) {
 		super.delete(ts);
 	}
 
 	@Override
-	@Transactional(readOnly = false)
+	@Transactional
 	public void deleteByIds(Collection<Integer> ids) {
 		super.deleteByIds(ids);
 	}
