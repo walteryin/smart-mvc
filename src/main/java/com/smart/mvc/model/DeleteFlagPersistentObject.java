@@ -5,7 +5,7 @@ package com.smart.mvc.model;
  * 
  * @author Joe
  */
-public class DeleteFlagPersistentObject extends PersistentObject {
+public class DeleteFlagPersistentObject extends SimplePersistentObject {
 
 	private static final long serialVersionUID = 1472145516693079043L;
 	

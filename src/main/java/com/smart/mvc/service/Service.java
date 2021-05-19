@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import com.smart.mvc.model.Page;
-import com.smart.mvc.model.PersistentObject;
+import com.smart.mvc.model.Persistent;
 
 /**
  * Service接口
@@ -14,7 +14,7 @@ import com.smart.mvc.model.PersistentObject;
  * @param <ID>
  * @author Joe
  */
-public interface Service<T extends PersistentObject, ID extends Serializable> {
+public interface Service<T extends Persistent<ID>, ID extends Serializable> {
     
 	/**
      * 查询所有集合

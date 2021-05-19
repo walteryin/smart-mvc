@@ -13,7 +13,7 @@ import org.springframework.util.CollectionUtils;
 import com.smart.mvc.dao.Dao;
 import com.smart.mvc.model.Condition;
 import com.smart.mvc.model.Page;
-import com.smart.mvc.model.PersistentObject;
+import com.smart.mvc.model.Persistent;
 import com.smart.mvc.provider.DynamicSqlProvider;
 import com.smart.mvc.service.Service;
 import com.smart.mvc.util.ConvertUtils;
@@ -27,7 +27,7 @@ import com.smart.mvc.util.ConvertUtils;
  * @param <ID>
  * @author Joe
  */
-public class ServiceImpl<DAO extends Dao<T>, T extends PersistentObject, ID extends Serializable>
+public class ServiceImpl<DAO extends Dao<T>, T extends Persistent<ID>, ID extends Serializable>
 		implements Service<T, ID> {
 
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
@@ -116,13 +116,11 @@ public class ServiceImpl<DAO extends Dao<T>, T extends PersistentObject, ID exte
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void delete(T t) {
 		deleteById((ID) t.getId());
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
     public void delete(Collection<T> ts) {
         deleteByIds(ConvertUtils.convert(ts, t -> (ID)t.getId()));

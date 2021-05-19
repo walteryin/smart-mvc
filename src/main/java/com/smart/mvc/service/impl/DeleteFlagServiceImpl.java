@@ -19,7 +19,7 @@ import com.smart.mvc.service.BaseService;
  * @param <T>
  * @author Joe
  */
-public class DeleteFlagServiceImpl<DAO extends Dao<T>, T extends DeleteFlagPersistentObject> extends BaseServiceImpl<DAO, T>
+public class DeleteFlagServiceImpl<DAO extends Dao<T>, T extends DeleteFlagPersistentObject> extends SimpleServiceImpl<DAO, T>
 		implements BaseService<T> {
 	
 	@Override
