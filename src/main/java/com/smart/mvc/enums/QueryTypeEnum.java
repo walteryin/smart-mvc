@@ -1,13 +1,13 @@
 package com.smart.mvc.enums;
 
-import com.smart.mvc.model.EnumItemable;
+import com.smart.mvc.model.Itemable;
 
 /**
  * 查询类型
  * 
  * @author Joe
  */
-public enum QueryTypeEnum implements EnumItemable<QueryTypeEnum> {
+public enum QueryTypeEnum implements Itemable<String> {
     IS_NULL("is null", ValueTypeEnum.NO), 
     IS_NOT_NULL("is not null", ValueTypeEnum.NO), 
     EQUAL("=", ValueTypeEnum.SINGLE), 

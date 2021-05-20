@@ -7,7 +7,7 @@ import java.io.Serializable;
  * 
  * @author Joe
  */
-public class Item implements Itemable, Serializable {
+public class Item implements Itemable<Object>, Serializable {
 	
     private static final long serialVersionUID = -447313839033608947L;
     

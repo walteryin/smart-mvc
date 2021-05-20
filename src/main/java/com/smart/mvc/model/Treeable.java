@@ -18,6 +18,10 @@ public interface Treeable {
 	Integer getParentId();
 
 	Integer getId();
+	
+	default boolean isTopParent() {
+		return getParentId() == null || Integer.valueOf(0).equals(getParentId());
+	}
 
 	static <T extends Treeable, E extends Tree> List<E> build(Collection<T> c, Function<? super T, ? extends E> f) {
 		if (CollectionUtils.isEmpty(c)) {
@@ -25,7 +29,7 @@ public interface Treeable {
 		}
 		List<E> treeList = new ArrayList<>();
 		for (T p : c) {
-			if (p.getParentId() == null || Integer.valueOf(0).equals(p.getParentId())) {
+			if (p.isTopParent()) {
 				E treeDto = f.apply(p);
 				treeDto.setPath(p.getId().toString());
 				loopSub(treeDto, c, f);
