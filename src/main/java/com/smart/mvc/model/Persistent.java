@@ -3,30 +3,30 @@ package com.smart.mvc.model;
 import java.io.Serializable;
 
 /**
- * 持久化支持类
+ * 持久化基类
  * 
  * @author Joe
  */
-public class Persistent<T> implements Serializable {
+public class Persistent<ID> implements Serializable {
 
 	private static final long serialVersionUID = 1472145516693079043L;
 	
 	/** 主键ID */
-	private T id;
+	private ID id;
 	
 	public Persistent() {
 	}
 	
-	public Persistent(T id) {
+	public Persistent(ID id) {
 		this();
 		this.id = id;
 	}
 
-	public T getId() {
+	public ID getId() {
 		return id;
 	}
 
-	public void setId(T id) {
+	public void setId(ID id) {
 		this.id = id;
 	}
 

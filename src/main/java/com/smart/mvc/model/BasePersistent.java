@@ -1,7 +1,7 @@
 package com.smart.mvc.model;
 
 /**
- * 持久化基类
+ * 基础持久化类
  * 
  * @author Joe
  */

@@ -7,7 +7,7 @@ import com.smart.mvc.model.StandardPersistent;
 import com.smart.mvc.service.BaseService;
 
 /**
- * Service基类，实现了数据的CRUD
+ * 标准Service基类
  * 
  * @param <DAO>
  * @param <T>

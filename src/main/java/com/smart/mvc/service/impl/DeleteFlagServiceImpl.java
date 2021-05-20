@@ -13,7 +13,7 @@ import com.smart.mvc.model.Page;
 import com.smart.mvc.service.BaseService;
 
 /**
- * Service基类，实现了数据的CRUD
+ * 支持逻辑删除Service基类
  * 
  * @param <DAO>
  * @param <T>
