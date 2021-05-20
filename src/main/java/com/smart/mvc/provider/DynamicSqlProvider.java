@@ -5,7 +5,7 @@ import java.util.Map;
 
 import javax.persistence.Table;
 
-import com.smart.mvc.model.PersistentObject;
+import com.smart.mvc.model.BasePersistent;
 import com.smart.mvc.resovler.TableResolver;
 import com.smart.mvc.resovler.TableResolver.TableInfo;
 
@@ -58,7 +58,7 @@ public class DynamicSqlProvider {
 			return clazz;
 		}
 		Class<?> parent = clazz.getSuperclass();
-		if (parent.equals(PersistentObject.class)) {
+		if (parent.equals(BasePersistent.class)) {
 			return clazz;
 		}
 		else if (parent.equals(Object.class)) {

@@ -3,7 +3,7 @@ package com.smart.mvc.service.impl;
 import java.util.Date;
 
 import com.smart.mvc.dao.Dao;
-import com.smart.mvc.model.SimplePersistentObject;
+import com.smart.mvc.model.StandardPersistent;
 import com.smart.mvc.service.BaseService;
 
 /**
@@ -13,7 +13,7 @@ import com.smart.mvc.service.BaseService;
  * @param <T>
  * @author Joe
  */
-public class SimpleServiceImpl<DAO extends Dao<T>, T extends SimplePersistentObject> extends BaseServiceImpl<DAO, T>
+public class StandardServiceImpl<DAO extends Dao<T>, T extends StandardPersistent> extends BaseServiceImpl<DAO, T>
 		implements BaseService<T> {
 	
 	@Override

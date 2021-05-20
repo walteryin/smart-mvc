@@ -7,33 +7,21 @@ import java.util.Date;
  * 
  * @author Joe
  */
-public class SimplePersistentObject extends PersistentObject {
+public class StandardPersistent extends BasePersistent {
 
 	private static final long serialVersionUID = 1496181940497282708L;
 
-	/** 创建者 */
-	private Integer createBy;
 	/** 创建时间 */
 	private Date createDate;
-	/** 更新者 */
-	private Integer updateBy;
 	/** 更新时间 */
 	private Date updateDate;
 
-	public SimplePersistentObject() {
+	public StandardPersistent() {
 		super();
 	}
 
-	public SimplePersistentObject(Integer id) {
+	public StandardPersistent(Integer id) {
 		super(id);
-	}
-
-	public Integer getCreateBy() {
-		return createBy;
-	}
-
-	public void setCreateBy(Integer createBy) {
-		this.createBy = createBy;
 	}
 
 	public Date getCreateDate() {
@@ -42,14 +30,6 @@ public class SimplePersistentObject extends PersistentObject {
 
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
-	}
-
-	public Integer getUpdateBy() {
-		return updateBy;
-	}
-
-	public void setUpdateBy(Integer updateBy) {
-		this.updateBy = updateBy;
 	}
 
 	public Date getUpdateDate() {

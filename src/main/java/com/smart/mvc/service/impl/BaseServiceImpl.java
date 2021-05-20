@@ -1,7 +1,7 @@
 package com.smart.mvc.service.impl;
 
 import com.smart.mvc.dao.Dao;
-import com.smart.mvc.model.PersistentObject;
+import com.smart.mvc.model.BasePersistent;
 import com.smart.mvc.service.BaseService;
 
 /**
@@ -11,6 +11,6 @@ import com.smart.mvc.service.BaseService;
  * @param <T>
  * @author Joe
  */
-public class BaseServiceImpl<DAO extends Dao<T>, T extends PersistentObject> extends ServiceImpl<DAO, T, Integer>
+public class BaseServiceImpl<DAO extends Dao<T>, T extends BasePersistent> extends ServiceImpl<DAO, T, Integer>
 		implements BaseService<T> {
 }
