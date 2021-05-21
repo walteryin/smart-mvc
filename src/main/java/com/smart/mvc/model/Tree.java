@@ -9,36 +9,36 @@ import java.util.List;
  * 
  * @author Joe
  */
-public class Tree implements Treeable, Serializable {
+public class Tree<T> implements Treeable<T>, Serializable {
 
 	private static final long serialVersionUID = -1044939782544438879L;
 	/** ID */
-	private Integer id;
+	private T id;
 	/** 父ID */
-	private Integer parentId;
+	private T parentId;
 	/** 名称 */
 	private String name;
 	/** ID路径 */
 	private String path;
 	/** 子节点 */
-	private List<Tree> children = new ArrayList<>();
+	private List<Tree<T>> children = new ArrayList<>();
 
 	public Tree() {
 		super();
 	}
 
-	public Tree(Integer id, Integer parentId, String name) {
+	public Tree(T id, T parentId, String name) {
 		super();
 		this.id = id;
 		this.parentId = parentId;
 		this.name = name;
 	}
 
-	public Integer getId() {
+	public T getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(T id) {
 		this.id = id;
 	}
 
@@ -58,19 +58,19 @@ public class Tree implements Treeable, Serializable {
 		this.path = path;
 	}
 
-	public Integer getParentId() {
+	public T getParentId() {
 		return parentId;
 	}
 
-	public void setParentId(Integer parentId) {
+	public void setParentId(T parentId) {
 		this.parentId = parentId;
 	}
 
-	public List<Tree> getChildren() {
+	public List<Tree<T>> getChildren() {
 		return children;
 	}
 
-	public void setChildren(List<Tree> children) {
+	public void setChildren(List<Tree<T>> children) {
 		this.children = children;
 	}
 }

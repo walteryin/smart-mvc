@@ -55,10 +55,7 @@ public class Persistent<ID> implements Serializable {
 	 */
 	@Override
 	public int hashCode() {
-		if (id == null) {
-			return Integer.valueOf(0);
-		}
-		return id.hashCode();
+		return id == null ? 0 : id.hashCode();
 	}
 
 	/**

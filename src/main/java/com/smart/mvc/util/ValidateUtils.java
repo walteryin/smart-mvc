@@ -3,11 +3,11 @@ package com.smart.mvc.util;
 import java.util.regex.Pattern;
 
 /**
- * String工具类
+ * 验证工具类
  * 
  * @author Joe
  */
-public class StringUtils {
+public class ValidateUtils {
 	
 	private static final Pattern MOBILE_PATTERN = Pattern.compile("[1][3456789]\\d{9}");
 	private static final Pattern EMAIL_PATTERN = Pattern.compile("^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$");

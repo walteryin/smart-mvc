@@ -13,39 +13,60 @@ import org.springframework.util.CollectionUtils;
  * 
  * @author Joe
  */
-public interface Treeable {
+public interface Treeable<T> {
 
-	Integer getParentId();
+	T getParentId();
 
-	Integer getId();
-	
+	T getId();
+
+	/**
+	 * 是否顶层父级节点
+	 * 
+	 * @return
+	 */
 	default boolean isTopParent() {
-		return getParentId() == null || Integer.valueOf(0).equals(getParentId());
+		T parentId = getParentId();
+		if (parentId == null) {
+			return true;
+		}
+		else if (parentId instanceof Integer) {
+			return Integer.valueOf(0).equals(parentId);
+		}
+		else if (parentId instanceof Long) {
+			return Long.valueOf(0).equals(parentId);
+		}
+		else if (parentId instanceof String) {
+			return "".equals(parentId);
+		}
+		else {
+			return false;
+		}
 	}
 
-	static <T extends Treeable, E extends Tree> List<E> build(Collection<T> c, Function<? super T, ? extends E> f) {
+	static <T extends Treeable<K>, E extends Tree<K>, K> List<E> build(Collection<T> c,
+			Function<? super T, ? extends E> f) {
 		if (CollectionUtils.isEmpty(c)) {
 			return Collections.emptyList();
 		}
 		List<E> treeList = new ArrayList<>();
 		for (T p : c) {
 			if (p.isTopParent()) {
-				E treeDto = f.apply(p);
-				treeDto.setPath(p.getId().toString());
-				loopSub(treeDto, c, f);
-				treeList.add(treeDto);
+				E tree = f.apply(p);
+				tree.setPath(p.getId().toString());
+				loopSub(tree, c, f);
+				treeList.add(tree);
 			}
 		}
 		return treeList;
 	}
 
-	static <T extends Treeable, E extends Tree> void loopSub(E treeDto, Collection<T> c,
+	static <T extends Treeable<K>, E extends Tree<K>, K> void loopSub(E tree, Collection<T> c,
 			Function<? super T, ? extends E> f) {
 		for (T p : c) {
-			if (treeDto.getId().equals(p.getParentId())) {
+			if (tree.getId().equals(p.getParentId())) {
 				E subDto = f.apply(p);
-				subDto.setPath(treeDto.getPath() + "," + subDto.getId());
-				treeDto.getChildren().add(subDto);
+				subDto.setPath(tree.getPath() + "," + subDto.getId());
+				tree.getChildren().add(subDto);
 				loopSub(subDto, c, f);
 			}
 		}

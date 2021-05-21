@@ -3,7 +3,7 @@ package com.smart.mvc.model;
 import java.util.Date;
 
 /**
- * 持久化基类
+ * 标准持久化基类
  * 
  * @author Joe
  */
@@ -15,14 +15,6 @@ public class StandardPersistent extends BasePersistent {
 	private Date createDate;
 	/** 更新时间 */
 	private Date updateDate;
-
-	public StandardPersistent() {
-		super();
-	}
-
-	public StandardPersistent(Integer id) {
-		super(id);
-	}
 
 	public Date getCreateDate() {
 		return createDate;

@@ -1,7 +1,7 @@
 package com.smart.mvc.model;
 
 /**
- * 持久化基类
+ * 支持逻辑删除持久化基类
  * 
  * @author Joe
  */

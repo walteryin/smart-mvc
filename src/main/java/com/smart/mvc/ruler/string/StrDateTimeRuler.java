@@ -3,13 +3,13 @@ package com.smart.mvc.ruler.string;
 import java.util.Objects;
 
 import com.smart.mvc.ruler.Ruler;
-import com.smart.mvc.util.StringUtils;
+import com.smart.mvc.util.ValidateUtils;
 
 public class StrDateTimeRuler implements Ruler<String> {
 
     @Override
 	public boolean check(String value) {
-		return Objects.isNull(value) || StringUtils.isDateTime(value);
+		return Objects.isNull(value) || ValidateUtils.isDateTime(value);
 	}
     
     @Override

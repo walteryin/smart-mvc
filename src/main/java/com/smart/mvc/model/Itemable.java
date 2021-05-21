@@ -37,11 +37,11 @@ public interface Itemable<T> {
 		return Optional.ofNullable(get(c, value)).map(d -> d.getLabel()).orElse(null);
 	}
 
-	static <E extends Itemable<?>> E getByLabel(Collection<E> c, String Label) {
+	static <E extends Itemable<?>> E getByLabel(Collection<E> c, String label) {
 		if (CollectionUtils.isEmpty(c)) {
 			return null;
 		}
-		return c.stream().filter(a -> a.getLabel().equals(Label)).findAny().orElse(null);
+		return c.stream().filter(a -> a.getLabel().equals(label)).findAny().orElse(null);
 	}
 
 	/**
@@ -59,8 +59,8 @@ public interface Itemable<T> {
 		return Optional.ofNullable(get(enumClass, value)).map(d -> d.getLabel()).orElse(null);
 	}
 
-	static <E extends Enum<E> & Itemable<?>> E getByLabel(Class<E> enumClass, String Label) {
-		return Stream.of(enumClass.getEnumConstants()).filter(a -> a.getLabel().equals(Label)).findAny().orElse(null);
+	static <E extends Enum<E> & Itemable<?>> E getByLabel(Class<E> enumClass, String label) {
+		return Stream.of(enumClass.getEnumConstants()).filter(a -> a.getLabel().equals(label)).findAny().orElse(null);
 	}
 
 	static <E extends Enum<E> & Itemable<?>> List<Item> getItemList(Class<E> enumClass) {
