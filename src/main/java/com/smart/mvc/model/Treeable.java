@@ -20,11 +20,11 @@ public interface Treeable<T> {
 	T getId();
 
 	/**
-	 * 是否顶层父级节点
+	 * 是否根节点
 	 * 
 	 * @return
 	 */
-	default boolean isTopParent() {
+	default boolean isRoot() {
 		T parentId = getParentId();
 		if (parentId == null) {
 			return true;
@@ -50,7 +50,7 @@ public interface Treeable<T> {
 		}
 		List<E> treeList = new ArrayList<>();
 		for (T p : c) {
-			if (p.isTopParent()) {
+			if (p.isRoot()) {
 				E tree = f.apply(p);
 				tree.setPath(p.getId().toString());
 				loopSub(tree, c, f);
