@@ -7,7 +7,7 @@ import com.smart.mvc.model.Itemable;
  * 
  * @author Joe
  */
-public enum QueryTypeEnum implements Itemable<String> {
+public enum QueryTypeEnum implements Itemable<ValueTypeEnum> {
     IS_NULL("is null", ValueTypeEnum.NO), 
     IS_NOT_NULL("is not null", ValueTypeEnum.NO), 
     EQUAL("=", ValueTypeEnum.SINGLE), 
@@ -24,11 +24,11 @@ public enum QueryTypeEnum implements Itemable<String> {
     NOT_LIKE("not like", ValueTypeEnum.SINGLE);
 
 	private String label;
-	private ValueTypeEnum valueType;
+	private ValueTypeEnum value;
 
-	private QueryTypeEnum(String label, ValueTypeEnum valueType) {
+	private QueryTypeEnum(String label, ValueTypeEnum value) {
 		this.label = label;
-		this.valueType = valueType;
+		this.value = value;
 	}
 
 	@Override
@@ -37,11 +37,7 @@ public enum QueryTypeEnum implements Itemable<String> {
 	}
 
 	@Override
-	public String getValue() {
-		return this.label;
+	public ValueTypeEnum getValue() {
+		return this.value;
 	}
-
-    public ValueTypeEnum getValueType() {
-        return valueType;
-    }
 }

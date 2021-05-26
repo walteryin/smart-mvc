@@ -46,14 +46,14 @@ public class Criteria extends Item {
 		if (queryType == null) {
 			throw new IllegalArgumentException("queryType cannot be null");
 		}
-		if (queryType.getValueType() != ValueTypeEnum.NO) {
+		if (queryType.getValue() != ValueTypeEnum.NO) {
 			if (value == null) {
 				throw new IllegalArgumentException("value cannot be null");
 			}
-			if (queryType.getValueType() == ValueTypeEnum.SINGLE) {
+			if (queryType.getValue() == ValueTypeEnum.SINGLE) {
 				val = value[0];
 			}
-			else if (queryType.getValueType() == ValueTypeEnum.COLLECTION) {
+			else if (queryType.getValue() == ValueTypeEnum.COLLECTION) {
 				if (!(value[0] instanceof Collection)) {
 					throw new IllegalArgumentException("value type must be Collection");
 				}
@@ -62,7 +62,7 @@ public class Criteria extends Item {
 				}
 				val = value[0];
 			}
-			else if (queryType.getValueType() == ValueTypeEnum.TWO) {
+			else if (queryType.getValue() == ValueTypeEnum.TWO) {
 				if (value.length == 2) {
 					val = value;
 				}
@@ -71,7 +71,7 @@ public class Criteria extends Item {
 				}
 			}
 		}
-		return create(column + " " + queryType.getLabel(), val, queryType.getValueType());
+		return create(column + " " + queryType.getLabel(), val, queryType.getValue());
 	}
 
 	public boolean isNoValue() {
