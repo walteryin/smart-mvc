@@ -1,9 +1,7 @@
 package com.smart.core.model;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.springframework.util.CollectionUtils;
@@ -61,10 +59,5 @@ public interface Itemable<T> {
 
 	static <E extends Enum<E> & Itemable<?>> E getByLabel(Class<E> enumClass, String label) {
 		return Stream.of(enumClass.getEnumConstants()).filter(a -> a.getLabel().equals(label)).findAny().orElse(null);
-	}
-
-	static <E extends Enum<E> & Itemable<?>> List<Item> getItemList(Class<E> enumClass) {
-		return Stream.of(enumClass.getEnumConstants()).map(e -> Item.create(e.getLabel(), e.getValue()))
-				.collect(Collectors.toList());
 	}
 }

@@ -1,6 +1,9 @@
 package com.smart.core.model;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * 键值对存储模型
@@ -29,6 +32,11 @@ public class Item implements Itemable<Object>, Serializable {
     public static Item create(String label, Object value) {
         return new Item(label, value);
     }
+    
+    public static <E extends Enum<E> & Itemable<?>> List<Item> createList(Class<E> enumClass) {
+		return Stream.of(enumClass.getEnumConstants()).map(e -> Item.create(e.getLabel(), e.getValue()))
+				.collect(Collectors.toList());
+	}
 
 	public String getLabel() {
 		return label;
