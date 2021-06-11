@@ -1,2 +1,2 @@
-# smart-mvc
-SSM工具类
+# smart-core
+核心工具Jar
