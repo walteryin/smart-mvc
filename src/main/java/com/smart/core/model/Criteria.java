@@ -7,7 +7,7 @@ import org.springframework.util.StringUtils;
 import com.smart.core.enums.QueryTypeEnum;
 import com.smart.core.enums.ValueTypeEnum;
 
-public class Criteria extends Item {
+public class Criteria extends Item<Object> {
 
 	private static final long serialVersionUID = 1681191456328793646L;
 
