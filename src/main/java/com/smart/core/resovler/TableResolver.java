@@ -63,7 +63,6 @@ public class TableResolver {
 		/* 字段列表 */
 		tableInfo.setColumnList(fieldList);
 		initSelectColumns(tableInfo);
-		initInsertSql(tableInfo);
 		initUpdateSql(tableInfo);
 		return tableInfo;
 	}
@@ -162,15 +161,15 @@ public class TableResolver {
 		tableInfo.setSelectColumns(columns.toString());
 	}
 
-	private static void initInsertSql(TableInfo tableInfo) {
+	public static String generateInsertSql(String tableName, List<TableColumn> columnList) {
 		StringJoiner columns = new StringJoiner(",", "(", ")");
 		StringJoiner values = new StringJoiner(",", "(", ")");
-		tableInfo.getColumnList().stream().filter(t -> !DynamicSqlProvider.ID.equals(t.getColumn())).forEach(t -> {
+		columnList.stream().filter(t -> !DynamicSqlProvider.ID.equals(t.getColumn())).forEach(t -> {
 			columns.add("`" + t.getColumn() + "`");
 			values.add("#{" + t.getField() + "}");
 		});
-		tableInfo.setInsertSql(new StringBuilder().append("INSERT INTO ").append(tableInfo.getTableName()).append(" ")
-				.append(columns.toString()).append(" VALUES ").append(values.toString()).toString());
+		return new StringBuilder().append("INSERT INTO ").append(tableName).append(" ").append(columns.toString())
+				.append(" VALUES ").append(values.toString()).toString();
 	}
 
 	private static void initUpdateSql(TableInfo tableInfo) {
@@ -186,7 +185,6 @@ public class TableResolver {
 	public static class TableInfo {
 		private String tableName;
 		private String selectColumns;
-		private String insertSql;
 		private String updateSql;
 		private List<TableColumn> columnList;
 
@@ -212,14 +210,6 @@ public class TableResolver {
 
 		public void setSelectColumns(String selectColumns) {
 			this.selectColumns = selectColumns;
-		}
-
-		public String getInsertSql() {
-			return insertSql;
-		}
-
-		public void setInsertSql(String insertSql) {
-			this.insertSql = insertSql;
 		}
 
 		public String getUpdateSql() {

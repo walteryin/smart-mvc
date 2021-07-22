@@ -1,12 +1,19 @@
 package com.smart.core.provider;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.persistence.Table;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.smart.core.model.BasePersistent;
 import com.smart.core.resovler.TableResolver;
+import com.smart.core.resovler.TableResolver.TableColumn;
 import com.smart.core.resovler.TableResolver.TableInfo;
 
 /**
@@ -15,6 +22,8 @@ import com.smart.core.resovler.TableResolver.TableInfo;
  * @author Joe
  */
 public class DynamicSqlProvider {
+	
+	private static final Logger logger = LoggerFactory.getLogger(DynamicSqlProvider.class);
 	
 	public static final String ID = "id";
 	
@@ -38,7 +47,26 @@ public class DynamicSqlProvider {
 	}
 	
 	public String insert(Object t) {
-		return getTable(t.getClass()).getInsertSql();
+		TableInfo table = getTable(t.getClass());
+		List<TableColumn> notNullColumnList = getNotNullColumnList(t, table.getColumnList());
+		return TableResolver.generateInsertSql(table.getTableName(), notNullColumnList);
+	}
+
+	private List<TableColumn> getNotNullColumnList(Object t, List<TableColumn> columnList) {
+		return columnList.stream().filter(c -> getValueByFieldName(t, c.getField()) != null)
+				.collect(Collectors.toList());
+	}
+
+	private Object getValueByFieldName(Object object, String fieldName) {
+		try {
+			Field field = object.getClass().getDeclaredField(fieldName);
+			field.setAccessible(true);
+			return field.get(object);
+		}
+		catch (Exception e) {
+			logger.error("getValueByFieldName excepiton, Class: {}, fieldName: {}", object.getClass(), fieldName, e);
+			return null;
+		}
 	}
 	
 	public String update(Object t) {
