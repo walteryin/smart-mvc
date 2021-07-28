@@ -46,9 +46,9 @@ public class PageInterceptor implements Interceptor {
 		if (invocation.getTarget() instanceof StatementHandler) {
 			StatementHandler statementHandler = (StatementHandler) invocation.getTarget();
 			Page<?> page = findPageParameter(statementHandler.getBoundSql().getParameterObject());
-			if (page == null)
+			if (page == null) {
 				return invocation.proceed();
-			else {
+			} else {
 				localPage.set(page);
 			}
 
@@ -82,8 +82,9 @@ public class PageInterceptor implements Interceptor {
 		}
 		else if (invocation.getTarget() instanceof ResultSetHandler) {
 			Page<?> page = localPage.get();
-			if (page == null)
+			if (page == null) {
 				return invocation.proceed();
+			}
 			try {
 				Object result = invocation.proceed();
 				page.setList((List) result);
@@ -155,16 +156,16 @@ public class PageInterceptor implements Interceptor {
 		ResultSet rs = null;
 		try {
 			countStmt = connection.prepareStatement(countSql);
-			BoundSql countBS = new BoundSql(mappedStatement.getConfiguration(), countSql,
+			BoundSql countBoundSql = new BoundSql(mappedStatement.getConfiguration(), countSql,
 					boundSql.getParameterMappings(), boundSql.getParameterObject());
 			
             // 解决分页使用<foreach>循环出现的BindingException问题
-            MetaObject countBsObject = SystemMetaObject.forObject(countBS);
+            MetaObject countBsObject = SystemMetaObject.forObject(countBoundSql);
             MetaObject boundSqlObject = SystemMetaObject.forObject(boundSql);
             countBsObject.setValue("metaParameters", boundSqlObject.getValue("metaParameters"));
             countBsObject.setValue("additionalParameters", boundSqlObject.getValue("additionalParameters"));
 			
-			setParameters(countStmt, mappedStatement, countBS, boundSql.getParameterObject());
+			setParameters(countStmt, mappedStatement, countBoundSql, boundSql.getParameterObject());
 			rs = countStmt.executeQuery();
 			int rowCount = 0;
 			if (rs.next()) {

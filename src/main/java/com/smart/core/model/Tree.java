@@ -34,6 +34,7 @@ public class Tree<T> implements Treeable<T>, Serializable {
 		this.name = name;
 	}
 
+	@Override
 	public T getId() {
 		return id;
 	}
@@ -58,6 +59,7 @@ public class Tree<T> implements Treeable<T>, Serializable {
 		this.path = path;
 	}
 
+	@Override
 	public T getParentId() {
 		return parentId;
 	}

@@ -26,7 +26,7 @@ import com.smart.core.provider.DynamicSqlProvider;
  */
 public class TableResolver {
 
-	private static final Map<Class<?>, TableInfo> tableInfoMap = new ConcurrentHashMap<>();
+	private static final Map<Class<?>, TableInfo> TABLE_INFO_MAP = new ConcurrentHashMap<>();
 
 	/**
 	 * <p>
@@ -38,7 +38,7 @@ public class TableResolver {
 	 * @return
 	 */
 	public static TableInfo resolve(Class<?> clazz) {
-		return tableInfoMap.computeIfAbsent(clazz, TableResolver::initTable);
+		return TABLE_INFO_MAP.computeIfAbsent(clazz, TableResolver::initTable);
 	}
 
 	private static TableInfo initTable(Class<?> clazz) {
