@@ -58,15 +58,22 @@ public class DynamicSqlProvider {
 	}
 
 	private Object getValueByFieldName(Object object, String fieldName) {
-		try {
-			Field field = object.getClass().getDeclaredField(fieldName);
-			field.setAccessible(true);
-			return field.get(object);
+		Class clazz = object.getClass();
+
+		Object value = null;
+		while (clazz != null) {
+			try {
+				Field field = clazz.getDeclaredField(fieldName);
+				field.setAccessible(true);
+				value = field.get(object);
+				break;
+			} catch (NoSuchFieldException e) {
+				clazz = clazz.getSuperclass();
+			} catch (Exception e) {
+				logger.error("getValueByFieldName excepiton, Class: {}, fieldName: {}", object.getClass(), fieldName, e);
+			}
 		}
-		catch (Exception e) {
-			logger.error("getValueByFieldName excepiton, Class: {}, fieldName: {}", object.getClass(), fieldName, e);
-			return null;
-		}
+		return value;
 	}
 	
 	public String update(Object t) {
