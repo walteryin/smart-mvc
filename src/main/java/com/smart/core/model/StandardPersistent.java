@@ -1,5 +1,7 @@
 package com.smart.core.model;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.util.Date;
 
 /**
@@ -12,8 +14,10 @@ public class StandardPersistent extends BasePersistent {
 	private static final long serialVersionUID = 1496181940497282708L;
 
 	/** 创建时间 */
+	@JSONField(format = "yyyy-MM-dd HH:mm:ss")
 	private Date createDate;
 	/** 更新时间 */
+	@JSONField(format = "yyyy-MM-dd HH:mm:ss")
 	private Date updateDate;
 
 	public Date getCreateDate() {
