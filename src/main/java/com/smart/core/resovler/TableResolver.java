@@ -175,7 +175,7 @@ public class TableResolver {
 	private static void initUpdateSql(TableInfo tableInfo) {
 		StringJoiner columns = new StringJoiner(",");
 		tableInfo.getColumnList().stream().filter(t -> !DynamicSqlProvider.ID.equals(t.getColumn()))
-				.forEach(t -> columns.add(t.getColumn() + "=#{" + t.getField() + "}"));
+				.forEach(t -> columns.add("`" + t.getColumn() + "`" + "=#{" + t.getField() + "}"));
 
 		tableInfo.setUpdateSql(new StringBuilder().append("UPDATE ").append(tableInfo.getTableName()).append(" SET ")
 				.append(columns.toString()).append(" WHERE ").append(DynamicSqlProvider.ID).append(" = #{")
