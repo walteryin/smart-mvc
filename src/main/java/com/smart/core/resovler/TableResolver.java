@@ -151,8 +151,7 @@ public class TableResolver {
 		StringJoiner columns = new StringJoiner(",");
 		List<TableColumn> list = tableInfo.getColumnList();
 		for (TableColumn entityColumn : list) {
-			String c = entityColumn.getColumn();
-			c = "`" + c + "`";
+			String c = formatColumn(entityColumn.getColumn());
 			if (!entityColumn.getColumn().equals(entityColumn.getField())) {
 				c += " AS " + entityColumn.getField();
 			}
@@ -165,8 +164,8 @@ public class TableResolver {
 		StringJoiner columns = new StringJoiner(",", "(", ")");
 		StringJoiner values = new StringJoiner(",", "(", ")");
 		columnList.stream().filter(t -> !DynamicSqlProvider.ID.equals(t.getColumn())).forEach(t -> {
-			columns.add("`" + t.getColumn() + "`");
-			values.add("#{" + t.getField() + "}");
+			columns.add(formatColumn(t.getColumn()));
+			values.add(formatField(t.getField()));
 		});
 		return new StringBuilder().append("INSERT INTO ").append(tableName).append(" ").append(columns.toString())
 				.append(" VALUES ").append(values.toString()).toString();
@@ -175,11 +174,19 @@ public class TableResolver {
 	private static void initUpdateSql(TableInfo tableInfo) {
 		StringJoiner columns = new StringJoiner(",");
 		tableInfo.getColumnList().stream().filter(t -> !DynamicSqlProvider.ID.equals(t.getColumn()))
-				.forEach(t -> columns.add("`" + t.getColumn() + "`" + "=#{" + t.getField() + "}"));
+				.forEach(t -> columns.add(formatColumn(t.getColumn()) + "=" + formatField(t.getField())));
 
 		tableInfo.setUpdateSql(new StringBuilder().append("UPDATE ").append(tableInfo.getTableName()).append(" SET ")
-				.append(columns.toString()).append(" WHERE ").append(DynamicSqlProvider.ID).append(" = #{")
-				.append(DynamicSqlProvider.ID).append("}").toString());
+				.append(columns.toString()).append(" WHERE ").append(DynamicSqlProvider.ID).append(" = ")
+				.append(formatField(DynamicSqlProvider.ID)).toString());
+	}
+
+	private static String formatColumn(String column) {
+		return "`" + column + "`";
+	}
+
+	private static String formatField(String field) {
+		return "#{" + field + "}";
 	}
 
 	public static class TableInfo {
